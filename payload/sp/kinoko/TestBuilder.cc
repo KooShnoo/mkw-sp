@@ -46,6 +46,9 @@ void TestBuilder::writeData(const TestData &data) {
     pData->softSpeedLimit = data.softSpeedLimit;
     pData->mainRot = data.mainRot;
     pData->angVel2 = data.angVel2;
+    pData->raceCompletion = data.raceCompletion;
+    pData->checkpointId = data.checkpointId;
+    pData->currentLap = data.currentLap;
 
     incFrameCount();
     m_index += sizeof(TestData);
@@ -62,12 +65,13 @@ TestData *TestBuilder::findNextEntry() const {
 
 u32 TestBuilder::version() const {
     constexpr u16 major = 0;
-    constexpr u16 minor = 5;
+    constexpr u16 minor = 6;
     return major << 16 | minor;
 }
 
 TestBuilder *TestBuilder::CreateInstance() {
-    assert(!s_instance);
+    // assert(!s_instance);
+    if (s_instance) { return s_instance; }
     s_instance = new TestBuilder;
     return s_instance;
 }
